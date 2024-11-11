@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.otp-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    background-image: url('https://s3-alpha-sig.figma.com/img/139d/827c/d75bfbbb18fefcba2a744eb559378aad?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BT7apJYLpz3QATPNC8T50oVwnIcLF~RlRR~bZaQEhX3pgNs620cIP32FLtU6c0prliaBh5368pMF4lp8Pd4WVxXpRR5oMlvhD1PXiNe6ftcqbJQjRJ-t2od97fktZzf7d894pViaUmC31RzwUqBLlc1F7~PxCuq7qHCKZP-W0GCpBDnVC8cmL3fXG3I0YBT~9MLHwKuD7ZzZWOH4qt3Ym~U8GJspc6TQHFt65lNBSznj1HZl~l93UctzX4gPCwjyVC9OHepRO-wGHTVSwJemOQVCHZbpJdA8v0e8Mcuw7oN4-1Ca-0sl5VLt79HvR8ri0sRjtnRNNNDZjfErqB7ngg__');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 0 15px;
+}
+
+.otp-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(27, 27, 43, 0.7);
+    z-index: 1;
+}
+
+.otp-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    padding: 20px;
+    width: 100%;
+}
+
+.otp-instruction {
+    font-size: 14px;
+    color: rgba(171, 187, 194, 1);
+}
+
+.otp-input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.otp-input {
+    background: rgba(171, 187, 194, 0.25);
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid rgba(51, 55, 72, 1);
+}
+
+.timer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timer-text {
+    font-size: 12px;
+    color: rgba(171, 187, 194, 1);
+    margin-left: 5px;
+}
+
+.resend-link {
+    font-size: 12px;
+    color: rgba(86, 120, 233, 1);
+    cursor: pointer;
+}
+
+.otp-logo img {
+    max-width: 200px;
+    width: 100%;
+}
+
+.otp-tagline h3 {
+    font-size: 18px;
+    color: white;
+}
+
+.otp-tagline h3 span {
+    font-size: 26px;
+    color: #DE9739;
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+    .otp-wrapper {
+        padding: 0 10px;
+    }
+
+    .otp-input-wrapper {
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .otp-input {
+        width: 50px;
+        height: 50px;
+    }
+
+    .timer-text, .resend-link {
+        font-size: 10px;
+    }
+
+    .otp-logo img {
+        width: 120px;
+    }
+
+    .otp-tagline h3 {
+        font-size: 16px;
+    }
+
+     .otp-tagline h3 span{
+        display: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .otp-input {
+        width: 45px;
+        height: 45px;
+    }
+
+    .otp-logo img {
+        width: 100px;
+    }
+
+    .otp-tagline h3 {
+        font-size: 14px;
+    }
+
+}
