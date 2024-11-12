@@ -12,7 +12,7 @@ exports.register = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstname, lastname, email, phone, country, state, city, restaurant, password, role } = req.body;
+    const { firstname, lastname, email, phone, country, state, city, restaurant, password, address, role } = req.body;
 
     try {
         let user = await User.findOne({ email });
@@ -20,16 +20,29 @@ exports.register = async (req, res) => {
             return res.status(400).json({ msg: 'User already exists' });
         }
 
-        user = new User({ firstname, lastname, email, phone, country, state, city, restaurant, password: await bcrypt.hash(password, 10), role });
+        const avatar = req.file ? req.file.path : null;
+
+        user = new User({ firstname, lastname, email, phone, country, state, city, restaurant, password: await bcrypt.hash(password, 10), address, role, avatar });
 
         await user.save();
-        res.status(201).json({ msg: 'User registered successfully' });
+
+        const avatarUrl = avatar ? `${req.protocol}://${req.get('host')}/${avatar}` : null;
+
+        res.status(201).json({
+            msg: 'User registered successfully',
+            // user: {
+            //     id: user._id,
+            //     firstname: user.firstname,
+            //     lastname: user.lastname,
+            //     email: user.email,
+            //     avatar: avatarUrl
+            // }
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
     }
 };
-
 // login
 exports.login = async (req, res) => {
     const errors = validationResult(req);
@@ -64,13 +77,51 @@ exports.login = async (req, res) => {
 // Get Data
 exports.getUsers = async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find().populate('restaurant');
         res.status(200).json(users);
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: 'Server error' });
     }
 };
+
+// Update User
+exports.updateUser = async (req, res) => {
+    const { firstname, lastname, email, phone, country, state, city, restaurant, address, role } = req.body;
+    const userId = req.params.id;
+
+    try {
+        let user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+
+        const avatar = req.file ? req.file.path : user.avatar;
+
+        user = await User.findByIdAndUpdate(
+            userId,
+            { firstname, lastname, email, phone, country, state, city, restaurant, address, role, avatar },
+            { new: true }
+        );
+
+        const avatarUrl = avatar ? `${req.protocol}://${req.get('host')}/${avatar}` : null;
+
+        res.status(200).json({
+            msg: 'User updated successfully',
+            // user: {
+            //     id: user._id,
+            //     firstname: user.firstname,
+            //     lastname: user.lastname,
+            //     email: user.email,
+            //     avatar: avatarUrl
+            // }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Server error' });
+    }
+};
+
 // Generate OTP function
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -100,7 +151,7 @@ exports.forgotPassword = async (req, res) => {
 
 // Verify OTP and Reset Password
 exports.verifyOtpAndResetPassword = async (req, res) => {
-    const { email, otp, newPassword, confirmPassword  } = req.body;
+    const { email, otp, newPassword, confirmPassword } = req.body;
 
     try {
 
@@ -124,6 +175,36 @@ exports.verifyOtpAndResetPassword = async (req, res) => {
 
         await Otp.deleteOne({ email, otp });
         res.status(200).json({ msg: 'Password reset successful' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Server error' });
+    }
+};
+
+// Change Password
+exports.changePassword = async (req, res) => {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    const userId = req.user.id;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ msg: 'Current password is incorrect' });
+        }
+
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({ msg: 'New password and confirm password do not match' });
+        }
+
+        user.password = await bcrypt.hash(newPassword, 10);
+        await user.save();
+
+        res.status(200).json({ msg: 'Password changed successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: 'Server error' });
