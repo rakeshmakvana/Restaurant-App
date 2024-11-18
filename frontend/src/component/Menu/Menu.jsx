@@ -95,7 +95,6 @@ const Managemenu = () => {
         { key: 'drinkjuice', title: 'Drink & Juice', imgSrc: 'https://s3-alpha-sig.figma.com/img/cecc/4fd1/3829c29c170bee25c8af06e829cde3de?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OfxfZ4fRAzEnRwdu3RpkoWOy--A22Bm7ldyJ6mdYxgbIC5n4tPJVRwdI8ElHVpGHWW2BGqlhW1qO~mVhnV2b9SWf0LgkonUbSNU5CcCkWH0VYCdSwbQVmDAXmb5-brCFVUchyzksqPbzebI4vLeQrhBDgNvXdxR6ktCeN6Tnj0~OGVWYD1xI5tAv~VglpbIhSreGuGGOzVwRiAd5Oi5Etn3O1p7-c5K9fY4PVxD1nyeQekWusbqyai~G7X3fIa~nW6PWZztwgx8LfnG0mR3pE-b8EeqjjzxlR2hBJdHKyS9R0d7zE5tnEv2K0V1nBaANBw2KXpJZSPYp6fimsRIbow__' },
     ];
     const categoryData = {
-
         all: [
             { title: 'burger Cheeseburger ', description: 'including premium beef, freshly baked brioche buns, crisp lettuce, ripe tomatoes, savory cheese, tangy pickles,', imgSrc: 'https://img.freepik.com/free-photo/exploding-burger-with-vegetables-melted-cheese-black-background-generative-ai_157027-1751.jpg?semt=ais_hybrid', price: '$10.99' },
             { title: 'Green Leaves Burger', description: 'including premium beef, freshly baked brioche buns, crisp lettuce, ripe tomatoes, savory cheese, tangy pickles,', imgSrc: 'https://img.freepik.com/premium-photo/delicious-fresh-burger-generative-ai_819176-161.jpg?semt=ais_hybrid', price: '$25.99' },
@@ -153,14 +152,9 @@ const Managemenu = () => {
             { title: 'Iced Tea', description: 'Including premium beef, freshly baked brioche buns, crisp lettuce, ripe tomatoes, savory cheese, tangy pickles.', imgSrc: 'https://img.freepik.com/free-photo/glass-coca-cola-with-ice-cubes-lemon-slice-grey-background_140725-10691.jpg?semt=ais_hybrid', price: '$2.79' },
             { title: 'Apple Juice', description: 'Including premium beef, freshly baked brioche buns, crisp lettuce, ripe tomatoes, savory cheese, tangy pickles.', imgSrc: 'https://img.freepik.com/free-photo/front-view-fresh-apple-juice-with-fresh-apples-dark-drink-photo-color-cocktail-fruit_140725-92829.jpg?semt=ais_hybrid', price: '$3.19' },
             { title: 'Berry Smoothie', description: 'Including premium beef, freshly baked brioche buns, crisp lettuce, ripe tomatoes, savory cheese, tangy pickles.', imgSrc: 'https://img.freepik.com/premium-photo/berry-smoothie_111869-1111.jpg?semt=ais_hybrid', price: '$4.99' }
-        ],
+        ]
 
     };
-    
-
-   
-    
-
 
 
     return (
@@ -209,7 +203,7 @@ const Managemenu = () => {
                                 </div>
                                 <Row>
                                     {(categoryData[key] || []).map((card, index) => (
-                                        <Col xs={12} sm={6} md={12} lg={4} key={index} className="mb-4">
+                                        <Col sm={6} md={12} lg={4} key={index} className="mb-4">
                                             <Card
                                                 className="h-100 border-0 p-3"
                                                 style={{
@@ -275,7 +269,7 @@ const Managemenu = () => {
                                                 <div
                                                     style={{
                                                         position: "absolute",
-                                                        bottom: "20px",
+                                                        bottom: "10px",
                                                         right: "10px",
                                                         display: "flex",
                                                         alignItems: "center",
