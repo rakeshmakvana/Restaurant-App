@@ -1,0 +1,234 @@
+.bg-Qrscan {
+    background-color: rgba(11, 15, 31, 1);
+    min-height: 100vh;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-1 {
+    width: 8.33%;
+}
+
+.col-2 {
+    width: 16.67%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-4 {
+    width: 33.33%;
+}
+
+.col-5 {
+    width: 41.67%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-7 {
+    width: 58.33%;
+}
+
+.col-8 {
+    width: 66.67%;
+}
+
+.col-9 {
+    width: 75%;
+}
+
+.col-10 {
+    width: 83.33%;
+}
+
+.col-11 {
+    width: 91.67%;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+    padding: 0px 5px;
+}
+
+nav .nav-item button {
+    padding: 5px 5px;
+}
+
+.tab-pane {
+    background: rgba(31, 29, 43, 1);
+
+    /* padding: 10px; */
+}
+
+.Qr-box {
+    padding: 10px;
+
+}
+
+.mein-qr {
+    padding: 20px;
+}
+
+.box-header h4 {
+    font-size: 16px;
+    color: white;
+    margin: 0px;
+}
+
+.qr-image-section {
+    background: rgba(31, 29, 43, 1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Styling the three vertical dots */
+.vertical-dots {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    justify-content: space-between;
+    height: 18px;
+    width: 18px;
+}
+
+/* Styling the individual dots */
+.vertical-dots span {
+    display: block;
+    width: 3px;
+    height: 3px;
+    background-color: white;
+    margin: 2px 0;
+    border-radius: 50%;
+}
+
+/* Container to position the dropdown menu */
+.menu-icon {
+    position: relative;
+}
+
+/* Enhanced Dropdown Menu styling */
+.dots-menu {
+    position: absolute;
+    top: 100%;
+    /* Position the menu below the dots */
+    right: 0;
+    background-color: rgba(45, 48, 62, 1);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    min-width: 120px;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+    /* Hide the dropdown by default */
+}
+
+/* When the dropdown is active, make it visible */
+.dots-menu.active {
+    opacity: 1;
+    pointer-events: auto;
+    /* Enable interactions when active */
+}
+
+/* Styling buttons inside the dropdown */
+.dots-menu button {
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    text-align: left;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 14px;
+}
+
+.dots-menu button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dots-menu button+button {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /* Small divider between buttons */
+}
+
+/* Hover effect for the vertical dots to indicate interactivity */
+.vertical-dots:hover span {
+    background-color: rgba(202, 146, 61, 1);
+    /* Change color on hover */
+}
+
+/* Optional - Add a transition to the vertical dots to animate */
+.vertical-dots span {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.modal {
+    display: block;
+    /* Make sure modal is visible */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1050;
+    /* Make sure it's above other content */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Overlay background */
+}
+
+.modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    /* You can adjust width */
+    max-width: 500px;
+    /* Max width */
+}
+
+.modal-content {
+    background: rgba(37, 40, 54, 1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.modal-body {
+    width: 100px;
+    height: 100px;
+    background: rgba(231, 76, 60, 1);
+    border-radius: 100%;
+
+}
+
+.para {
+    color: rgba(171, 187, 194, 1);
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .box-header h4{
+        font-size: 14px;
+    }
+}
