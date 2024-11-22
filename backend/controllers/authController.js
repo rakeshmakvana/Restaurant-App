@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
         }
 
         const payload = { user: { id: user.id } };
-        jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
+        jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '30d' }, (err, token) => {
             if (err) throw err;
             res.json({ token });
         });
@@ -59,10 +59,42 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.getUsers = async (req, res) => {
+exports.getUser = async (req, res) => {
+    const userId = req.user.id;
+
     try {
-        const users = await User.find();
-        res.status(200).json(users);
+        const user = await User.findById(userId).populate('restaurant');
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Server error' });
+    }
+};
+
+exports.updateUser = async (req, res) => {
+    const { firstname, lastname, email, phone, country, state, city, address, role, gender } = req.body;
+    const userId = req.user.id;
+
+    try {
+        let user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+
+        const avatar = req.file ? req.file.path : user.avatar;
+        const avatarUrl = avatar ? `${req.protocol}://${req.get('host')}/${avatar}` : null;
+
+        user = await User.findByIdAndUpdate(
+            userId,
+            { firstname, lastname, email, phone, country, state, city, address, role, avatar: avatarUrl, gender },
+            { new: true }
+        );
+
+        await user.save();
+
+        res.status(200).json({
+            msg: 'User updated successfully',
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: 'Server error' });
@@ -116,6 +148,36 @@ exports.verifyOtpAndResetPassword = async (req, res) => {
 
         await Otp.deleteOne({ otp: passOtp });
         res.status(200).json({ msg: 'Password reset successful' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Server error' });
+    }
+};
+
+exports.changePassword = async (req, res) => {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    const userId = req.user.id;
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ msg: 'Current password is incorrect' });
+        }
+
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({ msg: 'New password and confirm password do not match' });
+        }
+
+        user.password = await bcrypt.hash(newPassword, 10);
+        await user.save();
+
+        res.status(200).json({ msg: 'Password changed successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: 'Server error' });
