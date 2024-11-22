@@ -1,21 +1,101 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Form, Nav, Tab } from 'react-bootstrap';
 import '../styles/profile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faKey, faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import api from '../api';
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState('profile');
+    const [userData, setUserData] = useState({});
+    const [formData, setFormData] = useState({});
+    const [passwordData, setPasswordData] = useState({});
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await api.get('/api/auth/user', { headers: { 'x-auth-token': token } });
+                setUserData(response.data);
+                setFormData({
+                    ...response.data,
+                    restaurant: response.data.restaurant ? response.data.restaurant.restaurant_name : '',
+                });
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleFileChange = (e) => {
+        setFormData((prev) => ({
+            ...prev,
+            avatar: e.target.files[0],
+        }));
+    };
+
+    const handlePasswordChange = (e) => {
+        setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+    };
+
+    const handleUpdate = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            const data = new FormData();
+
+            Object.keys(formData).forEach((key) => {
+                if (key === 'avatar' && formData[key]) {
+                    data.append(key, formData[key]);
+                } else {
+                    data.append(key, formData[key]);
+                }
+            });
+
+            await api.put('/api/auth/update', data, { headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' } });
+            setUserData(formData);
+            setIsEditing(false);
+            alert("Profile Updated Successfully");
+        } catch (error) {
+            console.error("Error updating profile:", error);
+        }
+    };
+
+    const changePassword = async () => {
+        if (passwordData.newPassword !== passwordData.confirmPassword) {
+            console.log('Passwords do not match');
+            return;
+        }
+        try {
+            const token = localStorage.getItem('token');
+            const response = await api.put('/api/auth/change-password', passwordData, { headers: { 'x-auth-token': token } });
+            window.alert('Password Changed Successfully');
+            setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+        } catch (error) {
+            console.log('Error changing password');
+        }
+    };
 
     const handleSelect = (selectedTab) => {
         setActiveTab(selectedTab);
     };
 
     return (
-        <div className="page-wrapper w-100">
-            <div className="text-light profile-sidebar">
+        <div className="page-wrapper">
+            <div className="text-light profile-sidebar vh-100 pt-4 px-4 px-md-0">
                 <Row className="justify-content-center">
-                    <Col xs={12} sm={6} md={3} className="profile-section rounded-3"><br></br>
+                    <Col xs={12} sm={6} md={3} className="profile-section rounded-3 mb-3"><br></br>
                         <h4>Menu</h4>
                         <Nav variant="pills" className="flex-column" activeKey={activeTab} onSelect={handleSelect}>
                             <Nav.Item>
@@ -34,88 +114,163 @@ const Profile = () => {
                                 </Nav.Link>
                             </Nav.Item>
                         </Nav>
-
-
                     </Col>
-                    <Col xs={12} sm={6} md={8} className="profile-background p-4 rounded-3 profile-section vh-100">
+                    <Col xs={12} sm={6} md={8} className="profile-background p-4 rounded-3 profile-section" style={{ height: '80%' }}>
                         <Tab.Content>
                             <Tab.Pane eventKey="profile" active={activeTab === 'profile'}>
-                                {/* Profile Details Section */}
                                 <div className="main-profile-img profile-main-class-img-img">
                                     <img src="https://s3-alpha-sig.figma.com/img/0955/b7cb/6b8d7b581303d40fcc1f30dfc6de9d00?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PMEBYMP5RqT6Y-Fry3wR3to663zyYQVWK9mrIXFNJPa3nRNU6yThdWdt-9gZMwSgO8PqpBqh~~E-i72ibOZLV46WrNANvUNfWwwQChpqRQ1uu9XDSs52M21hvkPynbMHWDCCJkTLsHzjH4Tb38a7ocABAc~mpp4MhGrZQNYZNe6Ag6E4JnuENqX-Fiv1rxFRy5dGn31JNBEq2SLmd~0bEX~lRjZ4JAyF4p~8cjzdVC79671T3KJ921UjrAC3GbJ0kMgq4P0AA~XMUoy9I~gXp4mN~FybAZhr972ul3jTyDhefEEGu7iF~CHOHMxoYD2xXACLnU-1DTCmU4JxF~gKug__" alt="Profile" />
                                 </div>
-                                <div className="d-flex justify-content-between align-items-center mb-4">
-                                    <div className="d-flex align-items-center">
-                                        <img src="https://s3-alpha-sig.figma.com/img/0f9b/81fa/21460d39cd98ccca0d3fa906d5718aa3?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BUccAMNx71ez-Vg4~KgrcIj1juF9bWRvK4j8LwnvOl7QVIjzYGX0YRHLuc1wpZOvVRC7TtV6zRfxt27IMhnQTqUB7CxbVnWh5uBny1CBYpWPlwgPszFPmW9vvAr~b~nKv9w9Z7KaHw6sPpp2jeKPOHti3L2zCSD6mQoqcL14iRxOtjkrkxBwxLPn5rYKGVtKognvFi~1KmbaaVXCzZapShqUXoabIP~TIwOE4jctLyMDM1Huh9go54LSVQLDSPzP9MOWRVH80QTGEctcL2QBY1AWrB7fbbQLpnoQwXvn~Hi4fYHpDtL9Bow-825uR6kdTdeAzZgLXxqykORURlEKDA__" alt="User Avatar" className="rounded-circle me-3 profile-images" />
-                                    </div>
-                                    <Button variant="warning profile-edit-icon">
-                                        <i className="fas fa-edit"></i> Edit Profile
-                                    </Button>
-                                </div>
                                 {/* Profile Form */}
-                                <Form>
+                                <Form encType="multipart/form-data">
                                     <Row className="mb-3">
+                                        <Col xs={12} sm={12} md={12}>
+                                            <Form.Group className='mb-3'>
+                                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                                    <div className="d-flex align-items-center">
+                                                        <img src={formData.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfw5Zrm1sT55AxuAxyTs2dbfXJfJvNMw4_Ww&s"} alt="User Avatar" className="rounded-circle me-3 profile-images" />
+                                                    </div>
+                                                </div>
+                                                <Form.Control
+                                                    type="file"
+                                                    name="avatar"
+                                                    onChange={handleFileChange}
+                                                    readOnly={!isEditing}
+                                                />
+                                            </Form.Group>
+                                        </Col>
                                         <Col xs={12} sm={6} md={4}>
-                                            <Form.Group>
+                                            <Form.Group className='mb-3'>
                                                 <Form.Label>First Name</Form.Label>
-                                                <Form.Control type="text" value="Jeremy" readOnly />
+                                                <Form.Control
+                                                    type="text"
+                                                    name="firstname"
+                                                    value={formData.firstname || ""}
+                                                    onChange={handleChange}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                         <Col xs={12} sm={6} md={4}>
-                                            <Form.Group>
+                                            <Form.Group className='mb-3'>
                                                 <Form.Label>Last Name</Form.Label>
-                                                <Form.Control type="text" value="Wilson" readOnly />
+                                                <Form.Control
+                                                    type="text"
+                                                    name="lastname"
+                                                    value={formData.lastname || ""}
+                                                    onChange={handleChange}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                         <Col xs={12} sm={6} md={4}>
-                                            <Form.Group>
-                                                <Form.Label>Email Address</Form.Label>
-                                                <Form.Control type="email" value="jeremy.wilson@example.com" readOnly />
+                                            <Form.Group className='mb-3'>
+                                                <Form.Label>Email</Form.Label>
+                                                <Form.Control
+                                                    type="email"
+                                                    name="email"
+                                                    value={formData.email || ""}
+                                                    onChange={handleChange}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                         <Col xs={12} sm={6} md={4}>
-                                            <Form.Group>
-                                                <Form.Label>Phone Number</Form.Label>
-                                                <Form.Control type="text" value="+1 (123) 456-7890" readOnly />
+                                            <Form.Group className='mb-3'>
+                                                <Form.Label>Phone</Form.Label>
+                                                <Form.Control
+                                                    type="number"
+                                                    name="phone"
+                                                    value={formData.phone || ""}
+                                                    onChange={handleChange}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                         <Col xs={12} sm={6} md={4}>
-                                            <Form.Group>
+                                            <Form.Group className='mb-3'>
                                                 <Form.Label>Restaurant Name</Form.Label>
-                                                <Form.Control type="text" value="Statesman Restaurants" readOnly />
+                                                <Form.Control
+                                                    type="text"
+                                                    name="restaurant"
+                                                    value={formData.restaurant || ""}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                         <Col xs={12} sm={6} md={4}>
-                                            <Form.Group>
+                                            <Form.Group className='mb-3'>
                                                 <Form.Label>Gender</Form.Label>
-                                                <Form.Control type="text" value="Male" readOnly />
+                                                <Form.Control
+                                                    type="text"
+                                                    name="gender"
+                                                    value={formData.gender || ""}
+                                                    onChange={handleChange}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                         <Col xs={12} sm={6} md={4}>
-                                            <Form.Group>
+                                            <Form.Group className='mb-3'>
                                                 <Form.Label>City</Form.Label>
-                                                <Form.Control type="text" value="Surat" readOnly />
+                                                <Form.Control
+                                                    type="text"
+                                                    name="city"
+                                                    value={formData.city || ""}
+                                                    onChange={handleChange}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                         <Col xs={12} sm={6} md={4}>
-                                            <Form.Group>
+                                            <Form.Group className='mb-3'>
                                                 <Form.Label>State</Form.Label>
-                                                <Form.Control type="text" value="Gujarat" readOnly />
+                                                <Form.Control
+                                                    type="text"
+                                                    name="state"
+                                                    value={formData.state || ""}
+                                                    onChange={handleChange}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                         <Col xs={12} sm={6} md={4}>
-                                            <Form.Group>
+                                            <Form.Group className='mb-3'>
                                                 <Form.Label>Country</Form.Label>
-                                                <Form.Control type="text" value="India" readOnly />
+                                                <Form.Control
+                                                    type="text"
+                                                    name="country"
+                                                    value={formData.country || ""}
+                                                    onChange={handleChange}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                         <Col xs={12} sm={6} md={12}>
                                             <Form.Group>
                                                 <Form.Label>Address</Form.Label>
-                                                <Form.Control type="text" value="A-151 swastik plaza punagam,varachha jamnagar gujrat." readOnly />
+                                                <Form.Control
+                                                    type="text"
+                                                    name="address"
+                                                    value={formData.address || ""}
+                                                    onChange={handleChange}
+                                                    readOnly={!isEditing}
+                                                />
                                             </Form.Group>
                                         </Col>
                                     </Row>
+                                    <Button
+                                        variant={isEditing ? "success" : "warning"}
+                                        onClick={() => {
+                                            if (isEditing) {
+                                                handleUpdate();
+                                            } else {
+                                                setIsEditing(true);
+                                            }
+                                        }}
+                                    >
+                                        {isEditing ? "Save Changes" : "Edit Profile"}
+                                    </Button>
                                 </Form>
                             </Tab.Pane>
 
@@ -132,17 +287,32 @@ const Profile = () => {
                                         <Col xs={12} sm={6} md={8}>
                                             <Form.Group className="mb-3 ">
                                                 <Form.Label>Current Password</Form.Label>
-                                                <Form.Control type="password" placeholder="Enter current password" />
+                                                <Form.Control
+                                                    type="password"
+                                                    name="currentPassword"
+                                                    value={passwordData.currentPassword}
+                                                    onChange={handlePasswordChange}
+                                                />
                                             </Form.Group>
                                             <Form.Group className="mb-3">
                                                 <Form.Label>New Password</Form.Label>
-                                                <Form.Control type="password" placeholder="Enter new password" />
+                                                <Form.Control
+                                                    type="password"
+                                                    name="newPassword"
+                                                    value={passwordData.newPassword}
+                                                    onChange={handlePasswordChange}
+                                                />
                                             </Form.Group>
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Confirm New Password</Form.Label>
-                                                <Form.Control type="password" placeholder="Confirm new password" />
+                                                <Form.Control
+                                                    type="password"
+                                                    name="confirmPassword"
+                                                    value={passwordData.confirmPassword}
+                                                    onChange={handlePasswordChange}
+                                                />
                                             </Form.Group>
-                                            <Button variant="warning w-100" type="submit">
+                                            <Button variant="warning w-100" onClick={changePassword}>
                                                 Change Password
                                             </Button>
                                         </Col>

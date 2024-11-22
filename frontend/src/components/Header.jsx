@@ -1,18 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import hLogo from '../assets/hLogo.png';
-import c1 from '../assets/c1.jpeg';
 import { IoIosNotifications } from "react-icons/io";
 import { CiSearch } from 'react-icons/ci';
 import { BiSolidDownArrow } from 'react-icons/bi';
 import '../styles/header.css';
+import api from '../api';
 
 const Header = () => {
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await api.get('/api/auth/user', { headers: { 'x-auth-token': token } });
+                setUser(response.data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <>
             <div className="header">
                 <div className="header-logo">
-                    <img src={hLogo} alt="h-logo" />
+                    <h2>
+                        Welcome Back 👋
+                    </h2>
+                    <h3>
+                        {user && user.restaurant ? (
+                            <h3>{user.restaurant.restaurant_name}</h3>
+                        ) : (
+                            <p>Loading restaurant</p>
+                        )}
+                    </h3>
                 </div>
                 <div className="col-9">
                     <div className="top-nav">
@@ -39,12 +63,12 @@ const Header = () => {
                                         textDecoration: "none",
                                         color: "white"
                                     }}>
-                                        <img src={c1} alt="c1" />
+                                        <img src={user.avatar} alt="avtar" />
                                         <h2 style={{
                                             fontSize: "16px",
                                             marginTop: "-28px",
                                             marginLeft: "50px",
-                                        }}>Mussabbir Hossain</h2>
+                                        }}>{user.firstname}  {user.lastname}</h2>
                                         <div className="profile-arrow">
                                             <BiSolidDownArrow />
                                         </div>

@@ -10,8 +10,16 @@
     align-items: center;
 }
 
-.header-logo img {
-    height: 60px;
+.header-logo h2{
+    font-size: 26px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.header-logo h3{
+    font-size: 14px;
+    color: #abbbc2;
+    font-weight: 400;
 }
 
 .col-9 {
@@ -115,6 +123,9 @@
         width: calc(100% - 200px);
         margin-left: 200px;
     }
+     .header-logo h2, .header-logo h3{
+        display: none !important;
+    }
 
     .searchinputs input {
         width: 250px;
@@ -140,6 +151,10 @@
         right: 10px;
         width: 180px;
         height: 40px;
+    }
+
+    .header-logo h2, .header-logo h3{
+        display: none !important;
     }
 
     .header {
@@ -181,7 +196,7 @@
 
 
 @media (max-width: 425px) {
-    .header-logo img {
+    .header-logo h2, .header-logo h3{
         display: none !important;
     }
 }

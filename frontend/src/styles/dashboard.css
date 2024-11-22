@@ -1,6 +1,7 @@
 .page-wrapper {
-    margin-left: 270px;
+    margin-left: 280px;
     padding: 0px 25px;
+    background-color: #0B0F1F;
 }
 
 .content {
@@ -191,7 +192,6 @@
 }
 
 @media (max-width: 1024px) {
-
     .dash-widget {
         display: none;
     }
@@ -199,7 +199,6 @@
     .dash-img img {
         width: 720px;
     }
-
 
     .dishes {
         order: 2;
