@@ -1,0 +1,108 @@
+/* Container Styling */
+.trending-menu-container {
+  background-color: #1c1b22;
+  color: #fff;
+  padding: 20px 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trending-menu-content {
+  max-width: 100%;
+  /* Limit the width */
+  margin: 0 auto;
+  /* Center horizontally */
+}
+
+/* Header Styling */
+.trending-menu-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Card Styling */
+.menu-item-card {
+  background-color: #292a36;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.menu-item-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.menu-item-orders {
+  font-size: 0.85rem;
+  color: #b3b3b3;
+}
+
+.menu-item-price {
+  font-size: 1rem;
+  color: #33cc33;
+  font-weight: bold;
+}
+
+/* Button Styling */
+.order-now-btn {
+  background-color: #ff9900;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.order-now-btn:hover {
+  background-color: #e68a00;
+  color: #fff;
+}
+
+/* Floating Menu Button */
+.menu-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #292a36;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.menu-btn:hover {
+  background-color: #1c1b22;
+  color: #ff9900;
+  cursor: pointer;
+}
+
+.menu-btn i {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 1400px) {
+
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 100%;
+  }
+}

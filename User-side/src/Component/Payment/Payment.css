@@ -1,0 +1,59 @@
+.payment-container {
+    background-color: #000000;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .payment-card {
+    background-color: rgba(51, 55, 72, 1);
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .back-arrow {
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .payment-option label {
+    color: white;
+  }
+  
+  .payment-option input {
+    accent-color: #ffbf00;
+  }
+  
+  .form-control {
+    background-color: rgba(45, 48, 62, 1);
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #ffbf00;
+  }
+  
+  .payable-text {
+    font-size: 16px;
+  }
+  
+  .payable-amount {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .btn-primary {
+    background-color: #ffbf00;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #e6aa00;
+  }
+  

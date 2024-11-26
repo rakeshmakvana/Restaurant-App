@@ -1,0 +1,62 @@
+.app-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header-container {
+    height: 60px;
+    background-color: rgba(31, 29, 43, 1);
+    padding: 10px 15px;
+    color: #fff;
+    font-size: 18px;
+}
+
+.header-title {
+    font-weight: bold;
+}
+
+/* Content Section */
+.content-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #000;
+}
+
+.illustration img {
+    /* width: 200px; */
+    height: auto;
+    border-radius: 10px;
+}
+
+.text-container {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.add-items-button {
+    background-color: #ffc107;
+    color: #000;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+}
+
+/* Footer */
+.footer-container {
+    height: 60px;
+    background-color:rgba(31, 29, 43, 1);
+    color: #fff;
+    font-size: 16px;
+}
+
+.pay-now-button {
+    background-color: #ffc107;
+    color: #000;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+}
