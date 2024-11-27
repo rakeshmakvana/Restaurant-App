@@ -1,10 +1,8 @@
-const { log } = require('console');
 const multer = require('multer');
 const path = require('path');
 
 const storage = multer.diskStorage({
-    
-    destination: (req, file, cb) => {        
+    destination: (req, file, cb) => {
         cb(null, 'uploads/avatars');
     },
     filename: (req, file, cb) => {
@@ -14,7 +12,7 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png/;
-    const isFileTypeValid = allowedTypes.test(path.extname(file.originalname).toLowerCase()) && allowedTypes.test(file.mimetype);    
+    const isFileTypeValid = allowedTypes.test(path.extname(file.originalname).toLowerCase()) && allowedTypes.test(file.mimetype);
     cb(null, isFileTypeValid);
 };
 

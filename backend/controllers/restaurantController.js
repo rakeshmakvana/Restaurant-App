@@ -1,10 +1,11 @@
 const Restaurant = require('../models/Restaurant');
 
-exports.createRestaurant = async (req, res) => {
+const createRestaurant = async (req, res) => {
     const { restaurant_name, restaurant_address, country, city, state, zip_code } = req.body;
-    
+
     try {
-        const newRestaurant = new Restaurant({ restaurant_name, restaurant_address, country, city, state, zip_code,
+        const newRestaurant = new Restaurant({
+            restaurant_name, restaurant_address, country, city, state, zip_code,
         });
         await newRestaurant.save();
 
@@ -15,7 +16,7 @@ exports.createRestaurant = async (req, res) => {
     }
 };
 
-exports.getAllRestaurants = async (req, res) => {
+const getAllRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
         res.status(200).json(restaurants);
@@ -24,3 +25,5 @@ exports.getAllRestaurants = async (req, res) => {
         res.status(500).json({ msg: 'Server error' });
     }
 };
+
+module.exports = { createRestaurant, getAllRestaurants };
