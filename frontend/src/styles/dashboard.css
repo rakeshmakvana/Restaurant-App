@@ -13,7 +13,7 @@
     height: 200px;
 }
 
-.card .card-body {
+.dash-widget .card .card-body {
     padding: 21px;
 }
 
@@ -21,12 +21,13 @@
     padding: 10px;
 }
 
-.card {
+.dash-widget .card {
     background: rgba(31, 29, 43, 1);
     border-radius: 10px;
+    height: 120px;
 }
 
-.card-img img {
+.dash-widget .card-img img {
     width: 40px;
     height: 40px;
 }
@@ -35,38 +36,37 @@
     color: white;
 }
 
-.card-img {
+.dash-widget .card-img {
     display: flex;
 }
 
-.card-img img {
+.dash-widget .card-img img {
     max-width: 40px;
     height: auto;
 }
 
-.card-body p {
+.dash-widget .card-body p {
     margin-left: 10px;
     font-size: 18px;
     color: rgba(171, 187, 194, 1);
 }
 
-.card-text {
+.dash-widget .card-text {
     display: flex;
     flex-direction: column;
     margin-left: 15px;
 }
 
-.card-text p {
+.dash-widget .card-text p {
     margin: 0;
     font-size: 15px;
 }
 
-.card-text h3 {
+.dash-widget .card-text h3 {
     margin: 5px 0 0;
     font-size: 17px;
     color: rgba(255, 255, 255, 1);
     font-weight: 500;
-
 }
 
 .dishes {

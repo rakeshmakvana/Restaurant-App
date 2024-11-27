@@ -63,15 +63,21 @@ const Header = () => {
                                         textDecoration: "none",
                                         color: "white"
                                     }}>
-                                        <img src={user.avatar} alt="avtar" />
-                                        <h2 style={{
-                                            fontSize: "16px",
-                                            marginTop: "-28px",
-                                            marginLeft: "50px",
-                                        }}>{user.firstname}  {user.lastname}</h2>
-                                        <div className="profile-arrow">
-                                            <BiSolidDownArrow />
-                                        </div>
+                                        {user && user.avatar ? (
+                                            <>
+                                                <img src={user.avatar} alt="avtar" />
+                                                <h2 style={{
+                                                    fontSize: "16px",
+                                                    marginTop: "-28px",
+                                                    marginLeft: "50px",
+                                                }}>{user.firstname}  {user.lastname}</h2>
+                                                <div className="profile-arrow">
+                                                    <BiSolidDownArrow />
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <p className='p-3'>Loading User</p>
+                                        )}
                                     </a>
                                 </div>
                             </div>

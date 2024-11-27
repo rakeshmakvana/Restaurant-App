@@ -101,7 +101,7 @@ const Sidebar = () => {
                     )}
                     <li className="sidebar-item">
                         <MdOutlineRestaurantMenu size={19} className="sidebar-icon" />
-                        <a href="#home" className="sidebar-link">Merge Menu</a>
+                        <a href="/menu" className="sidebar-link">Merge Menu</a>
                     </li>
                     <li className="sidebar-item" onClick={togglePaymentHistory}>
                         <MdPayment size={19} className="sidebar-icon" />

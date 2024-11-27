@@ -5,11 +5,12 @@ import Login from "./components/login"
 import Otpemail from "./components/Otpemail"
 import Register from "./components/register"
 import Resetpassword from "./components/Resetpassword"
-import Home from "./components/Home";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Dashboard from "./components/Dashboard";
 import Profile from "./components/Profile";
+import Menu from "./components/Menu";
+import AddFood from "./components/Addfood";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -45,6 +46,18 @@ function App() {
           path="/profile"
           element={
             isAuth == true ? <><Sidebar /><Header /><Profile /></> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/menu"
+          element={
+            isAuth == true ? <><Sidebar /><Header /><Menu /></> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/addfood"
+          element={
+            isAuth == true ? <><Sidebar /><Header /><AddFood /></> : <Navigate to="/login" />
           }
         />
       </Routes>
