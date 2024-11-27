@@ -1,15 +1,17 @@
 const Category = require('../models/category');
 const path = require('path');
 
-const createCategory = async (req, res) => {
+// Create a new category
+exports.createCategory = async (req, res) => {
     try {
-        const { name } = req.body;
+        const { categoryName } = req.body;
         const image = req.file ? req.file.path : null;
         const createdBy = req.user.id;
 
-        if (!name || !image) return res.status(400).json({ message: 'Name and image are required' });
+        if (!categoryName || !image) return res.status(400).json({ message: 'Name and image are required' });
+        const categoryUrl = image ? `${req.protocol}://${req.get('host')}/${image}` : null;
 
-        const category = new Category({ name, image, createdBy });
+        const category = new Category({ name: categoryName, image: categoryUrl, createdBy });
         await category.save();
 
         res.status(201).json(category);
@@ -18,7 +20,8 @@ const createCategory = async (req, res) => {
     }
 };
 
-const getCategories = async (req, res) => {
+// Get all categories
+exports.getCategories = async (req, res) => {
     try {
         const categories = await Category.find().populate('createdBy');
 
@@ -29,7 +32,8 @@ const getCategories = async (req, res) => {
     }
 };
 
-const getCategoryById = async (req, res) => {
+// Get a single category
+exports.getCategoryById = async (req, res) => {
     try {
         const category = await Category.find(req.params.id).populate('createdBy', 'firstname lastname email');
 
@@ -44,7 +48,8 @@ const getCategoryById = async (req, res) => {
     }
 };
 
-const updateCategory = async (req, res) => {
+// Update
+exports.updateCategory = async (req, res) => {
     try {
         const { name } = req.body;
         const image = req.file ? req.file.path : null;
@@ -81,7 +86,8 @@ const updateCategory = async (req, res) => {
     }
 };
 
-const deleteCategory = async (req, res) => {
+// Delete
+exports.deleteCategory = async (req, res) => {
     try {
         const category = await Category.findByIdAndDelete(req.params.id);
 
@@ -95,5 +101,3 @@ const deleteCategory = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
-module.exports = { createCategory, getCategories, getCategoryById, updateCategory, deleteCategory };

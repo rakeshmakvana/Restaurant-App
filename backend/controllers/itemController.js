@@ -1,17 +1,11 @@
-const Item = require('../models/item');
+const Item = require('../models/Item');
 const Category = require('../models/category');
 const path = require('path');
 
-const createItem = async (req, res) => {
+// Create Item
+exports.createItem = async (req, res) => {
     try {
-
-        const { name, ingredients, price, discount, category, itemType, spicyLevel, sweetLevel, vegNonVeg } = req.body;
-
-        let customization = req.body.customization;
-        if (typeof customization === 'string') {
-            customization = JSON.parse(customization);
-        }
-
+        const { name, ingredients, price, discount, category, itemType, spicyLevel, vegNonVeg } = req.body;
         const image = req.file.path ? req.file.path : null;
 
         if (!name || !ingredients || !price || !category || !itemType || !vegNonVeg || !image) {
@@ -23,7 +17,7 @@ const createItem = async (req, res) => {
             return res.status(404).json({ message: 'Category not found' });
         }
 
-        const item = new Item({ name, ingredients, price, discount, category, itemType, spicyLevel, sweetLevel, vegNonVeg, image, customization });
+        const item = new Item({ name, ingredients, price, discount, category, itemType, spicyLevel, vegNonVeg, image });
 
         await item.save();
         res.status(201).json(item);
@@ -33,7 +27,8 @@ const createItem = async (req, res) => {
     }
 };
 
-const getItems = async (req, res) => {
+// Get All Items
+exports.getItems = async (req, res) => {
     try {
         const items = await Item.find().populate('category');
         res.json(items);
@@ -43,12 +38,13 @@ const getItems = async (req, res) => {
     }
 };
 
-const updateItem = async (req, res) => {
+// Update Item
+exports.updateItem = async (req, res) => {
     try {
-        const { name, ingredients, price, discount, category, itemType, spicyLevel, sweetLevel, vegNonVeg, customization } = req.body;
+        const { name, ingredients, price, discount, category, itemType, spicyLevel, vegNonVeg } = req.body;
         const image = req.file ? req.file.path : null;
 
-        const updatedData = { name, ingredients, price, discount, category, itemType, spicyLevel, sweetLevel, vegNonVeg, customization };
+        const updatedData = { name, ingredients, price, discount, category, itemType, spicyLevel, vegNonVeg };
         if (image) updatedData.image = image;
 
         const item = await Item.findByIdAndUpdate(req.params.id, updatedData, { new: true });
@@ -63,7 +59,8 @@ const updateItem = async (req, res) => {
     }
 };
 
-const deleteItem = async (req, res) => {
+// Delete Item
+exports.deleteItem = async (req, res) => {
     try {
         const item = await Item.findByIdAndDelete(req.params.id);
         if (!item) {
@@ -75,22 +72,3 @@ const deleteItem = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
-const getItemCustomization = async (req, res) => {
-    try {
-        const itemId = req.params.id;
-
-        const item = await Item.findById(itemId, 'customization');
-
-        if (!item) {
-            return res.status(404).json({ message: "Item not found" });
-        }
-
-        res.status(200).json({ customization: item.customization });
-    } catch (error) {
-        console.error("Error fetching customization data:", error);
-        res.status(500).json({ message: "Server error", error: error.message });
-    }
-};
-
-module.exports = { createItem, getItems, updateItem, deleteItem, getItemCustomization };

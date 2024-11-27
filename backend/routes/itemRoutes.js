@@ -13,13 +13,11 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   }
 });
-
 const upload = multer({ storage: storage });
 
 router.post('/', authenticate, upload.single('image'), itemController.createItem);
 router.get('/', authenticate, itemController.getItems);
 router.put('/:id', authenticate, upload.single('image'), itemController.updateItem);
 router.delete('/:id', authenticate, itemController.deleteItem);
-router.get('/:id/customization', itemController.getItemCustomization);
 
 module.exports = router;
