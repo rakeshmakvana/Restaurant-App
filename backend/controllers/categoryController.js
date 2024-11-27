@@ -1,8 +1,7 @@
 const Category = require('../models/category');
 const path = require('path');
 
-// Create a new category
-exports.createCategory = async (req, res) => {
+const createCategory = async (req, res) => {
     try {
         const { name } = req.body;
         const image = req.file ? req.file.path : null;
@@ -19,8 +18,7 @@ exports.createCategory = async (req, res) => {
     }
 };
 
-// Get all categories
-exports.getCategories = async (req, res) => {
+const getCategories = async (req, res) => {
     try {
         const categories = await Category.find().populate('createdBy');
 
@@ -31,8 +29,7 @@ exports.getCategories = async (req, res) => {
     }
 };
 
-// Get a single category
-exports.getCategoryById = async (req, res) => {
+const getCategoryById = async (req, res) => {
     try {
         const category = await Category.find(req.params.id).populate('createdBy', 'firstname lastname email');
 
@@ -47,8 +44,7 @@ exports.getCategoryById = async (req, res) => {
     }
 };
 
-// Update
-exports.updateCategory = async (req, res) => {
+const updateCategory = async (req, res) => {
     try {
         const { name } = req.body;
         const image = req.file ? req.file.path : null;
@@ -85,8 +81,7 @@ exports.updateCategory = async (req, res) => {
     }
 };
 
-// Delete
-exports.deleteCategory = async (req, res) => {
+const deleteCategory = async (req, res) => {
     try {
         const category = await Category.findByIdAndDelete(req.params.id);
 
@@ -100,3 +95,5 @@ exports.deleteCategory = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+module.exports = { createCategory, getCategories, getCategoryById, updateCategory, deleteCategory };

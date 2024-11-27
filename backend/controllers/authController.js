@@ -1,12 +1,11 @@
-const User = require('../models/User');
+const User = require('../models/user');
 const Otp = require('../models/Otp');
 const bcrypt = require('bcryptjs');
 const sendOtpEmail = require('../config/email');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
-// Register
-exports.register = async (req, res) => {
+const register = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -30,21 +29,14 @@ exports.register = async (req, res) => {
 
         res.status(201).json({
             msg: 'User registered successfully',
-            // user: {
-            //     id: user._id,
-            //     firstname: user.firstname,
-            //     lastname: user.lastname,
-            //     email: user.email,
-            //     avatar: avatarUrl
-            // }
         });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
     }
 };
-// login
-exports.login = async (req, res) => {
+
+const login = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -74,8 +66,7 @@ exports.login = async (req, res) => {
     }
 };
 
-// Get Data
-exports.getUsers = async (req, res) => {
+const getUsers = async (req, res) => {
     try {
         const users = await User.find().populate('restaurant');
         res.status(200).json(users);
@@ -85,8 +76,7 @@ exports.getUsers = async (req, res) => {
     }
 };
 
-// Update User
-exports.updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
     const { firstname, lastname, email, phone, country, state, city, restaurant, address, role } = req.body;
     const userId = req.params.id;
 
@@ -108,13 +98,6 @@ exports.updateUser = async (req, res) => {
 
         res.status(200).json({
             msg: 'User updated successfully',
-            // user: {
-            //     id: user._id,
-            //     firstname: user.firstname,
-            //     lastname: user.lastname,
-            //     email: user.email,
-            //     avatar: avatarUrl
-            // }
         });
     } catch (error) {
         console.error(error);
@@ -122,11 +105,9 @@ exports.updateUser = async (req, res) => {
     }
 };
 
-// Generate OTP function
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-// Forgot Password - Send OTP to Email
-exports.forgotPassword = async (req, res) => {
+const forgotPassword = async (req, res) => {
     const { email } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -149,8 +130,7 @@ exports.forgotPassword = async (req, res) => {
     }
 };
 
-// Verify OTP and Reset Password
-exports.verifyOtpAndResetPassword = async (req, res) => {
+const verifyOtpAndResetPassword = async (req, res) => {
     const { email, otp, newPassword, confirmPassword } = req.body;
 
     try {
@@ -181,8 +161,7 @@ exports.verifyOtpAndResetPassword = async (req, res) => {
     }
 };
 
-// Change Password
-exports.changePassword = async (req, res) => {
+const changePassword = async (req, res) => {
     const { currentPassword, newPassword, confirmPassword } = req.body;
     const userId = req.user.id;
 
@@ -210,3 +189,5 @@ exports.changePassword = async (req, res) => {
         res.status(500).json({ msg: 'Server error' });
     }
 };
+
+module.exports = { register, login, getUsers, updateUser, forgotPassword, verifyOtpAndResetPassword, changePassword };

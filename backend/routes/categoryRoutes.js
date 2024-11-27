@@ -5,7 +5,6 @@ const path = require('path');
 const categoryController = require('../controllers/categoryController');
 const { authenticate } = require('../middleware/authMiddleware');
 
-// Multer for image upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/food/');

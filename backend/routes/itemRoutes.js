@@ -5,7 +5,6 @@ const { authenticate } = require('../middleware/authMiddleware');
 const multer = require('multer');
 const path = require('path');
 
-// multer for image upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/items/');
@@ -21,5 +20,6 @@ router.post('/', authenticate, upload.single('image'), itemController.createItem
 router.get('/', authenticate, itemController.getItems);
 router.put('/:id', authenticate, upload.single('image'), itemController.updateItem);
 router.delete('/:id', authenticate, itemController.deleteItem);
+router.get('/:id/customization', itemController.getItemCustomization);
 
 module.exports = router;
