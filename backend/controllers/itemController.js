@@ -1,4 +1,4 @@
-const Item = require('../models/Item');
+const Item = require('../models/item');
 const Category = require('../models/category');
 const path = require('path');
 
@@ -7,6 +7,7 @@ exports.createItem = async (req, res) => {
     try {
         const { name, ingredients, price, discount, category, itemType, spicyLevel, vegNonVeg } = req.body;
         const image = req.file.path ? req.file.path : null;
+        const imageUrl = image ? `${req.protocol}://${req.get('host')}/${image}` : null;
 
         if (!name || !ingredients || !price || !category || !itemType || !vegNonVeg || !image) {
             return res.status(400).json({ message: 'All fields are required' });
@@ -17,7 +18,7 @@ exports.createItem = async (req, res) => {
             return res.status(404).json({ message: 'Category not found' });
         }
 
-        const item = new Item({ name, ingredients, price, discount, category, itemType, spicyLevel, vegNonVeg, image });
+        const item = new Item({ name, ingredients, price, discount, category, itemType, spicyLevel, vegNonVeg, image: imageUrl });
 
         await item.save();
         res.status(201).json(item);
@@ -43,9 +44,10 @@ exports.updateItem = async (req, res) => {
     try {
         const { name, ingredients, price, discount, category, itemType, spicyLevel, vegNonVeg } = req.body;
         const image = req.file ? req.file.path : null;
+        const imageUrl = image ? `${req.protocol}://${req.get('host')}/${image}` : null;
 
         const updatedData = { name, ingredients, price, discount, category, itemType, spicyLevel, vegNonVeg };
-        if (image) updatedData.image = image;
+        if (image) updatedData.image = imageUrl;
 
         const item = await Item.findByIdAndUpdate(req.params.id, updatedData, { new: true });
         if (!item) {

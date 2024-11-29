@@ -54,9 +54,10 @@ exports.updateCategory = async (req, res) => {
         const { name } = req.body;
         const image = req.file ? req.file.path : null;
         const updatedData = { name };
+        const categoryUrl = image ? `${req.protocol}://${req.get('host')}/${image}` : null;
 
         if (image) {
-            updatedData.image = image;
+            updatedData.image = categoryUrl;
         }
 
         if (!name && !image) {

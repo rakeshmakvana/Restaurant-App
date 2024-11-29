@@ -1,9 +1,10 @@
-const User = require('../models/User');
+const User = require('../models/user');
 const Otp = require('../models/Otp');
 const bcrypt = require('bcryptjs');
 const sendOtpEmail = require('../config/email');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
+const Customer = require('../models/Customer');
 
 exports.register = async (req, res) => {
     const errors = validationResult(req);
@@ -11,7 +12,7 @@ exports.register = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstName, lastName, email, phone, country, state, city, restaurant, password, role } = req.body;
+    const { firstName, lastName, email, phone, country, state, city, restaurant, password } = req.body;
 
     try {
         let user = await User.findOne({ email });
@@ -19,7 +20,7 @@ exports.register = async (req, res) => {
             return res.status(400).json({ msg: 'User already exists' });
         }
 
-        let newUser = await new User({ firstname: firstName, lastname: lastName, email, phone, country, state, city, restaurant, password: await bcrypt.hash(password, 10), role });
+        let newUser = await new User({ firstname: firstName, lastname: lastName, email, phone, country, state, city, restaurant, password: await bcrypt.hash(password, 10) });
 
         await newUser.save();
         res.status(201).json({ msg: 'User registered successfully' });
@@ -58,6 +59,37 @@ exports.login = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+exports.customerLogin = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { username, phoneNumber } = req.body;
+
+    try {
+        let customer = await Customer.findOne({ name: username, phone: phoneNumber });
+
+        if (!customer) {
+            customer = new Customer({ name: username, phone: phoneNumber });
+            await customer.save();
+        }
+        
+        const payload = {
+            user: { id: customer.id },
+        };
+
+        jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '30d' }, (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+        });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
+};
+
 
 exports.getUser = async (req, res) => {
     const userId = req.user.id;

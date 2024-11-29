@@ -6,6 +6,7 @@ const upload = require('../config/multerConfig');
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);
+router.post('/customerlogin', authController.customerLogin);
 router.get('/user', authenticate, authController.getUser);
 router.put('/update', authenticate, upload.single('avatar'), authController.updateUser);
 router.post('/forgot-password', authController.forgotPassword);
