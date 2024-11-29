@@ -1,0 +1,146 @@
+.bg-Qrscan {
+    background-color: rgba(11, 15, 31, 1);
+    min-height: 100vh;
+}
+
+nav .nav-item button {
+    padding: 5px 5px;
+}
+
+.qr .tab-pane {
+    background: rgba(31, 29, 43, 1);
+}
+
+.Qr-box {
+    padding: 10px;
+
+}
+
+.mein-qr {
+    padding: 20px;
+}
+
+.box-header h4 {
+    font-size: 16px;
+    color: white;
+    margin: 0px;
+}
+
+.qr-image-section {
+    background: rgba(31, 29, 43, 1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.vertical-dots {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    justify-content: space-between;
+    height: 18px;
+    width: 18px;
+}
+
+.vertical-dots span {
+    display: block;
+    width: 3px;
+    height: 3px;
+    background-color: white;
+    margin: 2px 0;
+    border-radius: 50%;
+}
+
+.menu-icon {
+    position: relative;
+}
+
+.dots-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: rgba(45, 48, 62, 1);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    min-width: 120px;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dots-menu.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dots-menu button {
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    text-align: left;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 14px;
+}
+
+.dots-menu button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dots-menu button+button {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vertical-dots:hover span {
+    background-color: rgba(202, 146, 61, 1);
+}
+
+.vertical-dots span {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.modal {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1050;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+}
+
+.modal-content {
+    background: rgba(37, 40, 54, 1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.modal-body {
+    width: 100px;
+    height: 100px;
+    background: rgba(231, 76, 60, 1);
+    border-radius: 100%;
+
+}
+
+.para {
+    color: rgba(171, 187, 194, 1);
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .box-header h4 {
+        font-size: 14px;
+    }
+}

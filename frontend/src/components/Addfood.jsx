@@ -52,7 +52,6 @@ function AddFood() {
         }
     };
 
-
     return (
         <>
             <div className="bg-addfood">
@@ -261,6 +260,7 @@ function AddFood() {
                                 </button>
                             </div>
                         </form>
+
 
                         {/* step1 */}
                         {/* <div className="addfood mb-2">
@@ -570,6 +570,8 @@ function AddFood() {
                                 Save
                             </button>
                         </div> */}
+
+                        
                     </div>
                 </div>
             </div>

@@ -21,6 +21,13 @@ const Sidebar = () => {
     const toggleManageOrder = () => setIsManageOrderOpen(!isManageOrderOpen);
     const togglePaymentHistory = () => setIsPaymentHistoryOpen(!isPaymentHistoryOpen);
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        window.alert('User Log Out');
+        navigate('/login');
+    };
+
     return (
         <>
             <Button variant="dark" onClick={handleShow} className='off-btn'>
@@ -69,10 +76,10 @@ const Sidebar = () => {
                         <a href="#home" className="sidebar-link">QR Codes</a>
                     </li>
                 </ul>
-                <div className="logout-container">
+                <div className="logout-container" onClick={handleLogout}>
                     <div className="logout-item">
                         <FiLogOut size={19} className="logout-icon" />
-                        <a href="#logout" className="logout-link">Logout</a>
+                        <a href="/login" className="logout-link">Logout</a>
                     </div>
                 </div>
             </Offcanvas>
@@ -116,13 +123,13 @@ const Sidebar = () => {
                     )}
                     <li className="sidebar-item">
                         <IoQrCodeSharp size={19} className="sidebar-icon" />
-                        <a href="#home" className="sidebar-link">QR Codes</a>
+                        <a href="/qrcode" className="sidebar-link">QR Codes</a>
                     </li>
                 </ul>
                 <div className="logout-container">
-                    <div className="logout-item">
+                    <div className="logout-item" onClick={handleLogout}>
                         <FiLogOut size={19} className="logout-icon" />
-                        <a href="#logout" className="logout-link">Logout</a>
+                        <a href="/login" className="logout-link">Logout</a>
                     </div>
                 </div>
             </div>

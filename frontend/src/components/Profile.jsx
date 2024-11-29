@@ -119,7 +119,7 @@ const Profile = () => {
                         <Tab.Content>
                             <Tab.Pane eventKey="profile" active={activeTab === 'profile'}>
                                 <div className="main-profile-img profile-main-class-img-img">
-                                    <img src="https://s3-alpha-sig.figma.com/img/0955/b7cb/6b8d7b581303d40fcc1f30dfc6de9d00?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PMEBYMP5RqT6Y-Fry3wR3to663zyYQVWK9mrIXFNJPa3nRNU6yThdWdt-9gZMwSgO8PqpBqh~~E-i72ibOZLV46WrNANvUNfWwwQChpqRQ1uu9XDSs52M21hvkPynbMHWDCCJkTLsHzjH4Tb38a7ocABAc~mpp4MhGrZQNYZNe6Ag6E4JnuENqX-Fiv1rxFRy5dGn31JNBEq2SLmd~0bEX~lRjZ4JAyF4p~8cjzdVC79671T3KJ921UjrAC3GbJ0kMgq4P0AA~XMUoy9I~gXp4mN~FybAZhr972ul3jTyDhefEEGu7iF~CHOHMxoYD2xXACLnU-1DTCmU4JxF~gKug__" alt="Profile" />
+                                    <img src="https://s3-alpha-sig.figma.com/img/0955/b7cb/6b8d7b581303d40fcc1f30dfc6de9d00?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=clswYp1SrYcZ4trM3dQFfr6zWq4ruVIFxan-~idQ5FfX7LLXvbVYlxGLsUVFd2eKmmAkwFLTWUB8Fq8FpXmrHBh3U~B6a8tC7A~tgNKiQrz8K~PfK6eNmJOAemMjmfpAQip6XH5E~1pfV072oFgTk7A9qGBhxHPIvMQMEKQ4U9i21QneowDYu21QRmHOyZi~uZcrHNAyXJOBCRw9LL4E2lIYn1rfYRR3lAMCelyYN9AAPnCgarO-IEM4P8Gq9lvMDRV9enmXJQfXmBE-TAxFn1HEaaxsPxb543DHLMgUFzS836VCj5hlMDLVBUIUKoYc7RZOX3rV1-RkNiGHSX9CBA__" alt="Profile" />
                                 </div>
                                 {/* Profile Form */}
                                 <Form encType="multipart/form-data">
@@ -277,7 +277,7 @@ const Profile = () => {
                             <Tab.Pane eventKey="change-password" active={activeTab === 'change-password'}>
                                 {/* Change Password Section */}
                                 <div className="main-profile-img profile-main-class-img-img">
-                                    <img src="https://s3-alpha-sig.figma.com/img/0955/b7cb/6b8d7b581303d40fcc1f30dfc6de9d00?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PMEBYMP5RqT6Y-Fry3wR3to663zyYQVWK9mrIXFNJPa3nRNU6yThdWdt-9gZMwSgO8PqpBqh~~E-i72ibOZLV46WrNANvUNfWwwQChpqRQ1uu9XDSs52M21hvkPynbMHWDCCJkTLsHzjH4Tb38a7ocABAc~mpp4MhGrZQNYZNe6Ag6E4JnuENqX-Fiv1rxFRy5dGn31JNBEq2SLmd~0bEX~lRjZ4JAyF4p~8cjzdVC79671T3KJ921UjrAC3GbJ0kMgq4P0AA~XMUoy9I~gXp4mN~FybAZhr972ul3jTyDhefEEGu7iF~CHOHMxoYD2xXACLnU-1DTCmU4JxF~gKug__" alt="Profile" />
+                                    <img src="https://s3-alpha-sig.figma.com/img/0955/b7cb/6b8d7b581303d40fcc1f30dfc6de9d00?Expires=1733702400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=clswYp1SrYcZ4trM3dQFfr6zWq4ruVIFxan-~idQ5FfX7LLXvbVYlxGLsUVFd2eKmmAkwFLTWUB8Fq8FpXmrHBh3U~B6a8tC7A~tgNKiQrz8K~PfK6eNmJOAemMjmfpAQip6XH5E~1pfV072oFgTk7A9qGBhxHPIvMQMEKQ4U9i21QneowDYu21QRmHOyZi~uZcrHNAyXJOBCRw9LL4E2lIYn1rfYRR3lAMCelyYN9AAPnCgarO-IEM4P8Gq9lvMDRV9enmXJQfXmBE-TAxFn1HEaaxsPxb543DHLMgUFzS836VCj5hlMDLVBUIUKoYc7RZOX3rV1-RkNiGHSX9CBA__" alt="Profile" />
                                     <div className="profile-change-password">
                                         <h4>Change Password</h4>
                                     </div><br></br>
